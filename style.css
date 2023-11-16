@@ -1,0 +1,58 @@
+:root {
+  --background: #22223b;
+  --primary: #4a4e69;
+}
+
+#tetris-container {
+  width: 680px;
+  height: 520px;
+  background-color: aliceblue;
+  margin: 0 auto;
+  overflow: auto;
+}
+
+#grid {
+  transform: scale(1);
+}
+
+tr{
+  height: fit-content;
+}
+
+td {
+  min-width: 15px;
+  height: 15px;
+  border: 1px solid #ccc;
+  color: red;
+  cursor: cell;
+}
+
+.alive {
+  background-color: #000;
+}
+/* style.css */
+
+#grid {
+  border-collapse: collapse;
+  width: fit-content;
+}
+
+body {
+  background-color: var(--background);
+  padding: 32px;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.starter {
+  margin: 10px;
+  align-self: center;
+}
+/* table{
+    background: var(--primary);
+  } */
