@@ -12,7 +12,8 @@
 }
 
 #grid {
-  transform: scale(1);
+  transform: scale(1.8,1.8);
+  offset-position: 24px ;
 }
 
 tr{
@@ -20,8 +21,6 @@ tr{
 }
 
 td {
-  min-width: 15px;
-  height: 15px;
   border: 1px solid #ccc;
   color: red;
   cursor: cell;

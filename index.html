@@ -10,10 +10,14 @@
     <div class="header">
       <img src="./assets/logo.png" alt="" />
     </div>
+    <div class="stat">
+      <div>Population:<span id="pop">0</span></div>
+      <div>Cycles:<span id="cycle"></span>0</div>
+
+    </div>
     <div id="tetris-container">
       <table id="grid"></table>
     </div>
-    <!-- <canvas id="canvas" width="680" height="420"></canvas> -->
     <button class="startButton">start</button>
     <button class="stopButton">stop</button>
     <button class="resetButton">reset</button>
@@ -23,60 +27,12 @@
         initGrid,
         startSimulation,
         stopSimulation,
-        updateGrid,
-        getcellNeighbors,
-        getPotentialCells,
-        getGrid,
+        reset,
       } from "./main.mjs";
 
       let simulationWorker;
-      document.addEventListener("DOMContentLoaded", () => {
-        initGrid();
-        simulationWorker = new Worker("worker.mjs");
-
-        simulationWorker.addEventListener("message", (event) => {
-          const { type, data } = event.data;
-
-          switch (type) {
-            case "updateGrid":
-              updateGrid(data.grid, data.potentialCells);
-              break;
-            case "getcellNeighbors":
-              getcellNeighbors();
-              break;
-            case "process":
-              simulationWorker.postMessage({data:[getGrid(),getPotentialCells()]})
-              break;
-            default:
-              break;
-          }
-        });
-      });
-
-      const reset = () => {
-        stopSimulation();
-
-        // Terminate the Web Worker
-        simulationWorker.terminate();
-
-        // Restart the Web Worker
-        simulationWorker = new Worker("worker.js");
-
-        Grid.forEach((row) => row.fill(-1));
-        potentialCells = [];
-
-        GridElement.querySelectorAll(".alive").forEach((elem) =>
-          elem.classList.remove("alive")
-        );
-      };
-
-      document.querySelector(".startButton").addEventListener("click", () => {
-        startSimulation();
-        simulationWorker.postMessage({
-          type: "start",
-          data: [getGrid(), getPotentialCells()],
-        });
-      });
+      document.addEventListener("DOMContentLoaded", initGrid);
+      document.querySelector(".startButton").addEventListener("click",startSimulation);
       document
         .querySelector(".stopButton")
         .addEventListener("click", stopSimulation);
