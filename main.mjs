@@ -8,7 +8,12 @@ let population = 0
 const Cells = new Map()
 var PotentialCells = [];
 let simulationLoop
+let Zoom = 2.1
+const ZOOM_SEED = 0.3
+const MIN_ZOOM = 1.5
+const MAX_ZOOM = 3
 
+const container = document.getElementById('container');
 const cycleElement = document.querySelector('#cycle')
 const popElement = document.querySelector('#pop')
 
@@ -22,6 +27,8 @@ export const initGrid = () => {
             td.classList.toggle('alive')
         })
     })
+
+
 }
 
 export const updateGrid = (grid) => {
@@ -38,6 +45,10 @@ export const updateGrid = (grid) => {
         }
     })
     Grid = grid
+
+    cycle++
+    cycleElement.innerText = cycle
+    popElement.innerText = population
 }
 
 const renderGrid = (grid) => {
@@ -47,12 +58,13 @@ const renderGrid = (grid) => {
             const cellElement = document.createElement('td');
             cellElement.dataset.coord = [x, y]
             Cells.set(`${[x, y]}`, cellElement)
-            cellElement.style.minWidth = cellSize + 'px'
-            cellElement.style.height = cellSize + 'px'
+            cellElement.style.minWidth = 1 + 'px'
+            cellElement.style.height = 1 + 'px'
             rowElement.appendChild(cellElement);
         }
         GridElement.appendChild(rowElement);
     }
+    GridElement.style.transform= `scale(${Zoom})`
     Grid = grid
 }
 
@@ -64,7 +76,7 @@ const setStartData = () => {
 export const startSimulation = () => {
     setStartData()
     // process()
-    simulationLoop = setInterval(process,1)
+    simulationLoop = setInterval(process)
 }
 
 export const stopSimulation = () => {
@@ -77,15 +89,17 @@ export const getcellNeighbors = () => {
     cells.forEach(c => {
         const [x, y] = c.dataset.coord.split(',').map(e => parseInt(e))
 
-        const tmp = [[y, x],
-        [y - 1, x - 1],
-        [y - 1, x],
-        [y - 1, x + 1],
-        [y, x - 1],
-        [y, x + 1],
-        [y + 1, x - 1],
-        [y + 1, x],
-        [y + 1, x + 1]]
+        const tmp = [
+            [y, x],
+            [y - 1, x - 1],
+            [y - 1, x],
+            [y - 1, x + 1],
+            [y, x - 1],
+            [y, x + 1],
+            [y + 1, x - 1],
+            [y + 1, x],
+            [y + 1, x + 1]
+        ]
 
         tmp.forEach(c => {
             if (c[0] < DEFAULT_COLS && c[1] < DEFAULT_ROWS && !PotentialCells.some(a => a[0] === c[0] && a[1] === c[1])) {
@@ -105,15 +119,16 @@ export const reset = () => {
 }
 
 const process = () => {
-    let newGrid = Array.from({ length: DEFAULT_ROWS }, () => Array(DEFAULT_COLS).fill(-1));
+    let newGrid = Array.from({
+        length: DEFAULT_ROWS
+    }, () => Array(DEFAULT_COLS).fill(-1));
     PotentialCells.forEach(coord => {
         const [y, x] = coord
         const neighborsCount = getNeighborsCount([x, y])
         if (newGrid[y] != undefined && newGrid[y][x] != undefined) {
             if (neighborsCount > 3 || neighborsCount < 2) {
                 newGrid[y][x] = -1
-            }
-            else if (neighborsCount === 3) {
+            } else if (neighborsCount === 3) {
                 newGrid[y][x] = 1
             } else newGrid[y][x] = Grid[y][x]
         }
@@ -121,9 +136,6 @@ const process = () => {
     updateGrid(newGrid)
     population = getActiveCells().length
     getcellNeighbors()
-    cycle++
-    cycleElement.innerText = cycle
-    popElement.innerText = population
     // requestAnimationFrame(process)
 }
 
@@ -152,4 +164,28 @@ const getActiveCells = () => {
         activeCells.push(c[1])
     })
     return activeCells
+}
+
+
+export const zoomIn = () => {
+    if (Zoom < MAX_ZOOM) {
+        Zoom += ZOOM_SEED;
+        updateZoom();
+    }
+};
+
+export const zoomOut = () => {
+    if (Zoom > MIN_ZOOM) {
+        Zoom -= ZOOM_SEED;
+        updateZoom();
+    }
+};
+
+function updateZoom() {
+    GridElement.style.transform = `scale(${Zoom})`;
+    const newScrollLeft = (container.scrollLeft) + Zoom;
+    const newScrollTop = (container.scrollTop) + Zoom;
+
+    container.scrollLeft = newScrollLeft;
+    container.scrollTop = newScrollTop;
 }

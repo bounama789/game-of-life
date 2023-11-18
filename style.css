@@ -1,19 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Blaka+Ink&display=swap');
 :root {
   --background: #22223b;
   --primary: #4a4e69;
 }
 
-#tetris-container {
-  width: 680px;
-  height: 520px;
+#container {
+  position: relative;
+  width: 920PX;
+  height: 420PX;
   background-color: aliceblue;
   margin: 0 auto;
   overflow: auto;
+  border-radius: 10px;
 }
 
-#grid {
-  transform: scale(1.8,1.8);
-  offset-position: 24px ;
+h1{
+  font-family: 'Amatic SC';
+  font-size: 48px;
+  color: white;
+}
+
+#pop,#cycle{
+  color: white;
 }
 
 tr{
@@ -34,6 +43,8 @@ td {
 #grid {
   border-collapse: collapse;
   width: fit-content;
+  transform-origin: top left;
+  transition: transform 0.2s ease-in-out;
 }
 
 body {
@@ -52,6 +63,24 @@ body {
   margin: 10px;
   align-self: center;
 }
-/* table{
-    background: var(--primary);
-  } */
+
+.icon{
+  font-family: 'Material Icons';
+}
+
+.zoom{
+  position: absolute;
+  z-index: 3;
+  background-color: white;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.zoom-in,.zoom-out{
+  font-size: 24px;
+  font-weight: bold;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
