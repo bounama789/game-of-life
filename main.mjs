@@ -8,7 +8,7 @@ let population = 0
 const Cells = new Map()
 var PotentialCells = [];
 let simulationLoop
-let Zoom = 2.1
+let Zoom = 2.5
 const ZOOM_SEED = 0.3
 const MIN_ZOOM = 1.5
 const MAX_ZOOM = 3
@@ -58,8 +58,8 @@ const renderGrid = (grid) => {
             const cellElement = document.createElement('td');
             cellElement.dataset.coord = [x, y]
             Cells.set(`${[x, y]}`, cellElement)
-            cellElement.style.minWidth = 1 + 'px'
-            cellElement.style.height = 1 + 'px'
+            cellElement.style.minWidth = 2 + 'px'
+            cellElement.style.height = 2 + 'px'
             rowElement.appendChild(cellElement);
         }
         GridElement.appendChild(rowElement);
@@ -75,7 +75,6 @@ const setStartData = () => {
 
 export const startSimulation = () => {
     setStartData()
-    // process()
     simulationLoop = setInterval(process)
 }
 

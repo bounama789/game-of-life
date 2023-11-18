@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Blaka+Ink&display=swap');
+
 :root {
   --background: #22223b;
   --primary: #4a4e69;
@@ -15,17 +16,19 @@
   border-radius: 10px;
 }
 
-h1{
+h1 {
   font-family: 'Amatic SC';
   font-size: 48px;
   color: white;
 }
 
-#pop,#cycle{
+#pop,
+#cycle {
   color: white;
+  padding: 5px;
 }
 
-tr{
+tr {
   height: fit-content;
 }
 
@@ -38,6 +41,7 @@ td {
 .alive {
   background-color: #000;
 }
+
 /* style.css */
 
 #grid {
@@ -64,11 +68,11 @@ body {
   align-self: center;
 }
 
-.icon{
+.icon {
   font-family: 'Material Icons';
 }
 
-.zoom{
+.zoom {
   position: absolute;
   z-index: 3;
   background-color: white;
@@ -76,11 +80,45 @@ body {
   border-radius: 8px;
 }
 
-.zoom-in,.zoom-out{
+.zoom-in,
+.zoom-out {
   font-size: 24px;
   font-weight: bold;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.stat-ctr {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-top: 15px;
+  padding: 2% 12%;
+  box-sizing: border-box;
+  gap: 5px;
+
+
+}
+
+.stat,
+.control {
+  flex: 1;
+  display: flex;
+  color: white;
+  border-radius: 12%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  padding: 5px;
+}
+
+.stat {
+  flex-direction: column;
+}
+
+.control {
+  flex-direction: column;
 }
